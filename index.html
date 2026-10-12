@@ -1,0 +1,296 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Sticker Star Re-Glued</title>
+<meta name="description" content="A fan mod that turns Paper Mario: Sticker Star's battles into a Thousand-Year Door style RPG: FP, badges, partner moves, Superguards, Stylish moves and a Pit of 100 Trials.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@500;700&family=Nunito:wght@400;700&display=swap" rel="stylesheet">
+<style>
+:root {
+  --bg: #f6efe0;
+  --paper: #fffaf0;
+  --ink: #2b2620;
+  --muted: #6b6255;
+  --line: #e2d6bd;
+  --red: #d8332b;
+  --gold: #f4b52c;
+  --green: #3f9b4a;
+  --blue: #2f6fd1;
+  --shadow: 0 2px 0 rgba(60, 45, 20, .12), 0 8px 24px rgba(60, 45, 20, .08);
+}
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    --bg: #1d1a16; --paper: #28241f; --ink: #f1e9da; --muted: #b5a891; --line: #3d372f;
+    --shadow: 0 2px 0 rgba(0,0,0,.3), 0 8px 24px rgba(0,0,0,.25);
+  }
+}
+:root[data-theme="dark"] {
+  --bg: #1d1a16; --paper: #28241f; --ink: #f1e9da; --muted: #b5a891; --line: #3d372f;
+  --shadow: 0 2px 0 rgba(0,0,0,.3), 0 8px 24px rgba(0,0,0,.25);
+}
+* { box-sizing: border-box; }
+html { scroll-behavior: smooth; }
+body {
+  margin: 0; background: var(--bg); color: var(--ink);
+  font: 17px/1.6 Nunito, system-ui, sans-serif;
+}
+a { color: var(--blue); }
+.wrap { max-width: 1040px; margin: 0 auto; padding: 0 16px; }
+h1, h2, h3 { font-family: Fredoka, Nunito, sans-serif; line-height: 1.15; margin: 0; }
+
+header.hero { padding: 56px 0 32px; text-align: center; }
+.tag {
+  display: inline-block; background: var(--gold); color: #2b2620; font-weight: 700;
+  padding: 4px 14px; border-radius: 999px; transform: rotate(-2deg); font-size: 14px; letter-spacing: .04em;
+}
+.hero h1 { font-size: clamp(40px, 8vw, 72px); margin: 16px 0 8px; color: var(--red);
+  text-shadow: 3px 3px 0 var(--paper), 5px 5px 0 rgba(0,0,0,.12); }
+.hero p.lead { font-size: clamp(18px, 2.4vw, 21px); color: var(--muted); max-width: 680px; margin: 0 auto; }
+.cta { margin-top: 24px; display: flex; gap: 12px; justify-content: center; flex-wrap: wrap; }
+.btn {
+  display: inline-block; padding: 12px 22px; border-radius: 12px; font-weight: 700; text-decoration: none;
+  background: var(--red); color: #fff; box-shadow: 0 3px 0 #9e2219;
+}
+.btn.alt { background: var(--paper); color: var(--ink); box-shadow: 0 3px 0 var(--line); border: 2px solid var(--line); }
+
+.shot { margin: 32px auto 0; border-radius: 18px; overflow: hidden; border: 6px solid var(--paper);
+  box-shadow: var(--shadow); transform: rotate(-.6deg); }
+.shot img { display: block; width: 100%; height: auto; }
+
+nav.toc { display: flex; flex-wrap: wrap; gap: 8px; justify-content: center; margin: 40px 0 8px; }
+nav.toc a { text-decoration: none; color: var(--ink); background: var(--paper); border: 2px solid var(--line);
+  padding: 6px 12px; border-radius: 999px; font-weight: 700; font-size: 14px; }
+
+section { padding: 40px 0 8px; }
+section > h2 { font-size: 32px; margin-bottom: 18px; display: flex; align-items: center; gap: 12px; }
+section > h2::before { content: ""; width: 14px; height: 14px; border-radius: 4px; background: var(--c, var(--red));
+  transform: rotate(45deg); flex: none; }
+
+.grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 16px; }
+.card { background: var(--paper); border: 2px solid var(--line); border-radius: 16px; padding: 20px 22px;
+  box-shadow: var(--shadow); }
+.card h3 { font-size: 21px; margin-bottom: 8px; }
+.card ul { margin: 0; padding-left: 20px; }
+.card li { margin: 4px 0; }
+.card li ul { margin-top: 4px; }
+.pill { display: inline-block; font-size: 13px; font-weight: 700; padding: 1px 8px; border-radius: 999px;
+  background: var(--bg); border: 1px solid var(--line); margin-right: 4px; white-space: nowrap; }
+
+.badges { display: flex; flex-wrap: wrap; gap: 6px; margin-top: 10px; }
+.badges span { background: var(--bg); border: 1px solid var(--line); border-radius: 8px; padding: 2px 9px; font-size: 14px; }
+
+ol.steps { counter-reset: s; list-style: none; padding: 0; margin: 0; }
+ol.steps li { counter-increment: s; position: relative; padding: 0 0 14px 48px; }
+ol.steps li::before { content: counter(s); position: absolute; left: 0; top: -2px; width: 34px; height: 34px;
+  border-radius: 50%; background: var(--green); color: #fff; font: 700 18px/34px Fredoka, sans-serif; text-align: center; }
+code { background: var(--bg); border: 1px solid var(--line); border-radius: 6px; padding: 1px 6px; font-size: 14px;
+  overflow-wrap: anywhere; }
+
+footer { margin: 56px 0 0; padding: 28px 0 40px; border-top: 2px dashed var(--line); color: var(--muted); font-size: 14px; }
+
+@media (max-width: 560px) {
+  header.hero { padding-top: 36px; }
+  .card { padding: 16px; }
+  section > h2 { font-size: 26px; }
+}
+</style>
+</head>
+<body>
+<div class="wrap">
+
+<header class="hero">
+  <span class="tag">FAN MOD · PAPER MARIO: STICKER STAR (USA)</span>
+  <h1>Sticker Star Re-Glued</h1>
+  <p class="lead">Sticker Star's world with The Thousand-Year Door's battles: FP and badges, a partner with her own moves, Superguards, Stylish moves, a cheering crowd and a Pit of 100 Trials.</p>
+  <div class="cta">
+    <a class="btn" href="#install">How to play</a>
+    <a class="btn alt" href="#features">See every change</a>
+  </div>
+  <div class="shot"><img src="assets/battle.jpg" alt="A battle in Sticker Star Re-Glued: Mario and Kersti face two Goombas, with HP labels over the enemies and the sticker album in the corner" width="1440" height="690"></div>
+</header>
+
+<nav class="toc" id="features">
+  <a href="#battle">Battle</a><a href="#fp">FP</a><a href="#action">Action commands</a><a href="#audience">Star Power</a>
+  <a href="#kersti">Kersti</a><a href="#badges">Badges</a><a href="#levels">Levels</a><a href="#world">Quality of life</a>
+  <a href="#pit">Pit &amp; challenges</a><a href="#install">Install</a>
+</nav>
+
+<section id="battle" style="--c: var(--red)">
+  <h2>Battle system</h2>
+  <div class="grid">
+    <div class="card"><h3>TTYD-scale numbers</h3><ul>
+      <li>Small HP and damage values: enemy HP is a third of Sticker Star's, and Mario starts with 10 HP.</li>
+      <li>Hammers hit for 2 / 4 / 6 (Hammer, Shiny, Flashy).</li>
+      <li>Jumps stomp up to twice: 1 per stomp, or 2 with Shiny Jump.</li>
+      <li>Boss HP rebalanced: Megasparkle Goomba is a little tougher, later bosses have half their old HP, and mini-bosses are unchanged.</li>
+    </ul></div>
+    <div class="card"><h3>Smarter fights</h3><ul>
+      <li>Enemies have Defense, and some are weak to Jump or Hammer.</li>
+      <li>Danger and Peril warnings at low HP. In Peril, Mario sometimes dodges.</li>
+      <li>Basic Jump and Hammer stickers are never used up.</li>
+      <li>Running away always works if you mash.</li>
+      <li>Battle coins are doubled.</li>
+    </ul></div>
+    <div class="card"><h3>Always-on HUD</h3><ul>
+      <li>A top bar shows <b>FP</b> and <b>SP</b> all battle, plus DANGER! / PERIL!</li>
+      <li>TTYD-style damage numbers and stars.</li>
+      <li>Widescreen 16:9 with a square-on TTYD battle camera. Bosses keep their own cameras.</li>
+    </ul></div>
+  </div>
+</section>
+
+<section id="fp" style="--c: var(--gold)">
+  <h2>Flower Points</h2>
+  <div class="grid">
+    <div class="card"><ul>
+      <li>Stickers cost FP. Plain Hammer and Jump are free, and stickers that aren't Shiny/Flashy Hammers or Jumps cost double.</li>
+      <li>Max FP grows with max HP. Mushrooms restore FP, and saving refills it.</li>
+      <li>Out of FP? The attack fizzles and you keep the sticker.</li>
+      <li>FP and Star Power are stored in your save.</li>
+    </ul></div>
+  </div>
+</section>
+
+<section id="action" style="--c: var(--blue)">
+  <h2>Action commands</h2>
+  <div class="grid">
+    <div class="card"><h3>Superguard</h3><ul>
+      <li>Press B at the last moment for 0 damage and a counter-hit that can defeat the enemy.</li>
+      <li>A SUPERGUARD! popup appears.</li>
+    </ul></div>
+    <div class="card"><h3>Stylish moves</h3><ul>
+      <li>Press A at the top of Mario's hop after a Jump or Hammer.</li>
+      <li>You get a sparkling double flip, Star Power and a bonus hit.</li>
+    </ul></div>
+    <div class="card"><h3>Timing popups</h3><ul>
+      <li>Nice, Great and Excellent on well-timed attacks.</li>
+    </ul></div>
+  </div>
+</section>
+
+<section id="audience" style="--c: var(--green)">
+  <h2>Audience &amp; Star Power</h2>
+  <div class="grid">
+    <div class="card"><h3>The crowd</h3><ul>
+      <li>A row of Toads watches every normal battle and cheers on great hits.</li>
+      <li>Earn Star Power from good timing, Superguards and Appeals (D-Up).</li>
+    </ul></div>
+    <div class="card"><h3>Special moves <span class="pill">START</span></h3><ul>
+      <li><b>Sweet Treat</b> (20 SP): heals half your HP and FP.</li>
+      <li><b>Earth Tremor</b> (30 SP): hits every enemy. Unlocked by 1 Royal Sticker.</li>
+      <li><b>Clock Out</b> (30 SP): stops enemies. Unlocked by 3 Royal Stickers.</li>
+      <li><b>Power Lift</b> (40 SP): +2 to Mario's hits for 3 turns. Unlocked by 5 Royal Stickers.</li>
+    </ul></div>
+  </div>
+</section>
+
+<section id="kersti" style="--c: var(--gold)">
+  <h2>Kersti, your partner</h2>
+  <div class="grid">
+    <div class="card"><h3>She fights too</h3><ul>
+      <li>Kersti acts after Mario, before the enemies, and picks a move from her speech bubble.</li>
+      <li>Her rank grows with the Royal Stickers you collect.</li>
+      <li>Press B in her menu to let Mario go first.</li>
+    </ul></div>
+    <div class="card"><h3>Her moves</h3><ul>
+      <li><b>Swoop</b>: a timed dive. Press A for a bonus hit, and choose your target.</li>
+      <li><b>Tattle</b>: an enemy's description, HP and Defense.</li>
+      <li><b>Royal Cheer</b> (FP): Mario hits harder.</li>
+      <li><b>Fold Strike</b> (FP): spinning, sparkling dives with screen-shaking slams.</li>
+    </ul></div>
+  </div>
+</section>
+
+<section id="badges" style="--c: var(--red)">
+  <h2>Badges</h2>
+  <div class="grid">
+    <div class="card"><h3>Badge Shop</h3><ul>
+      <li>The red-cap Toad in Toad Town sells badges and equips them. BP grows with HP-up hearts.</li>
+      <li><span class="pill">D-Down</span> in battle shows what you have equipped.</li>
+      <li>Some badges can only be won in the Pit.</li>
+    </ul>
+    <div class="badges">
+      <span>HP Plus</span><span>FP Plus</span><span>Power Plus</span><span>Defend Plus</span><span>Flower Saver</span>
+      <span>Happy Heart</span><span>Happy Flower</span><span>Close Call</span><span>Pretty Lucky</span><span>Lucky Day</span>
+      <span>Damage Dodge</span><span>Refund</span><span>HP Drain</span><span>Double Pain</span><span>Simplifier</span>
+      <span>Unsimplifier</span><span>Peekaboo</span><span>Power Rush</span><span>Mega Rush</span><span>Last Stand</span>
+      <span>Pit Champion</span><span>Charge</span><span>Feeling Fine</span><span>Double Dip</span>
+    </div></div>
+    <div class="card"><h3>New tricks</h3><ul>
+      <li><b>Charge</b> <span class="pill">D-Right</span>: spend FP for stronger hits this turn.</li>
+      <li><b>Feeling Fine</b>: no bad statuses.</li>
+      <li><b>Double Dip</b>: two stickers in one turn.</li>
+    </ul></div>
+  </div>
+</section>
+
+<section id="levels" style="--c: var(--blue)">
+  <h2>Levels</h2>
+  <div class="grid">
+    <div class="card"><ul>
+      <li>Defeat enemies for Star Points. Every 100 is a level up: pick HP +5, FP +5 or BP +3.</li>
+      <li>Level 5 gives Super Boots and Super Hammer (+1 damage). Level 10 gives Ultra Boots and Ultra Hammer (+1 more).</li>
+      <li>HP-up hearts give +5 HP and more BP.</li>
+    </ul></div>
+  </div>
+</section>
+
+<section id="world" style="--c: var(--green)">
+  <h2>Quality of life</h2>
+  <div class="grid">
+    <div class="card"><ul>
+      <li>First Strike: hit an enemy in the field to start with 1 damage, and it loses its first turn.</li>
+      <li>Enemies only ambush you from behind.</li>
+      <li>Toad Town heals HP and FP. Saving refills HP.</li>
+      <li>Mushrooms work in the field.</li>
+    </ul></div>
+    <div class="card"><ul>
+      <li>Faster running, faster text, faster sticker picking, no battle intros.</li>
+      <li>One of each sticker: no duplicate pickups.</li>
+      <li>An info sign explains every feature and holds the toggles, your stats and your achievements.</li>
+    </ul></div>
+  </div>
+</section>
+
+<section id="pit" style="--c: var(--red)">
+  <h2>Pit &amp; challenges</h2>
+  <div class="grid">
+    <div class="card"><h3>Pit of 100 Trials</h3><ul>
+      <li>100 floors built from the game's own battles, with a rest floor every 10. The Bros wait at the bottom.</li>
+      <li>Boss rematches after floor 100, from Megasparkle Goomba to Bowser Jr.</li>
+      <li>Clear-time records.</li>
+    </ul></div>
+    <div class="card"><h3>More modes</h3><ul>
+      <li><b>Boss Rush</b>, with a best time.</li>
+      <li><b>Arena</b>: 10 ranked fights for the Champion title.</li>
+      <li><b>Endless Pit</b>: floors that keep getting tougher.</li>
+      <li><b>Hard Mode</b> and <b>1 HP Mode</b> toggles for bigger rewards.</li>
+    </ul></div>
+  </div>
+</section>
+
+<section id="install" style="--c: var(--green)">
+  <h2>How to play</h2>
+  <div class="card">
+    <ol class="steps">
+      <li>You need your own legally dumped copy of <b>Paper Mario: Sticker Star (USA)</b>, title ID <code>00040000000A5E00</code>. This mod contains no game files.</li>
+      <li>Install the <a href="https://azahar-emu.org/">Azahar</a> 3DS emulator.</li>
+      <li>Download the latest mod from this project's Releases page and unzip it.</li>
+      <li>In Azahar, right-click the game, choose <b>Open Mods Location</b>, and copy the mod's <code>romfs</code> and <code>exefs</code> folders there.</li>
+      <li>Recommended settings: the Vulkan renderer, a 1920×1080 top screen, and ScaleForce texture filtering.</li>
+      <li>Start the game and read the info sign in Toad Town. It explains everything.</li>
+    </ol>
+  </div>
+</section>
+
+<footer>
+  Sticker Star Re-Glued is an unofficial fan project. It isn't affiliated with or endorsed by Nintendo or Intelligent Systems.
+  Paper Mario and all related names are trademarks of Nintendo. No game files are distributed; please own the game you play.
+</footer>
+
+</div>
+</body>
+</html>
