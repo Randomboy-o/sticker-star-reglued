@@ -56,7 +56,7 @@ header.hero { padding: 56px 0 32px; text-align: center; }
 }
 .btn.alt { background: var(--paper); color: var(--ink); box-shadow: 0 3px 0 var(--line); border: 2px solid var(--line); }
 
-.shot { margin: 32px auto 0; border-radius: 18px; overflow: hidden; border: 6px solid var(--paper);
+.shot { display: block; margin: 32px auto 0; border-radius: 18px; overflow: hidden; border: 6px solid var(--paper);
   box-shadow: var(--shadow); transform: rotate(-.6deg); }
 .shot img { display: block; width: 100%; height: auto; }
 
@@ -109,7 +109,7 @@ footer { margin: 56px 0 0; padding: 28px 0 40px; border-top: 2px dashed var(--li
     <a class="btn" href="#install">How to play</a>
     <a class="btn alt" href="#features">See every change</a>
   </div>
-  <div class="shot"><img src="assets/battle.jpg" alt="A battle in Sticker Star Re-Glued: Mario and Kersti face two Goombas, with HP labels over the enemies and the sticker album in the corner" width="1440" height="690"></div>
+  <a class="shot" href="assets/battle.jpg" title="Open the full-size screenshot"><img src="assets/battle.jpg" alt="A battle in Sticker Star Re-Glued: Mario and Kersti face two Goombas, with the FP / SP bar along the top, HP labels over the enemies and the sticker album in the corner" width="1600" height="900"></a>
 </header>
 
 <nav class="toc" id="features">
